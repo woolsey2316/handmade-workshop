@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { navLinks } from "@/lib/products";
+import LanguageMenuList from "@/components/ui/LanguageMenuList"
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -13,10 +14,7 @@ export function SiteHeader() {
       <div className="hidden border-b border-line bg-[#f9f9f9] text-[12px] text-muted md:block">
         <div className="mx-auto flex max-w-[1200px] items-center justify-between px-5 py-2.5">
           <div className="flex items-center gap-5">
-            <button type="button" className="inline-flex items-center gap-1.5 hover:text-ink">
-              <Image src="/en.png" alt="" width={16} height={11} />
-              English
-            </button>
+            <LanguageMenuList />
             <button type="button" className="hover:text-ink">
               USD
             </button>

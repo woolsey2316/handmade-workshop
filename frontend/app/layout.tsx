@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Great_Vibes, Outfit } from "next/font/google";
+import { Cormorant_Garamond, Great_Vibes, Varela_Round } from "next/font/google";
 import "./globals.css";
 
-const outfit = Outfit({
+const varelaRound = Varela_Round({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: "400",
 });
 
 const cormorant = Cormorant_Garamond({
@@ -17,7 +17,7 @@ const cormorant = Cormorant_Garamond({
 const greatVibes = Great_Vibes({
   variable: "--font-script",
   subsets: ["latin"],
-  weight: ["400"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -30,15 +30,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${outfit.variable} ${cormorant.variable} ${greatVibes.variable} h-full antialiased`}
+      className={`${varelaRound.variable} ${cormorant.variable} ${greatVibes.variable} h-full antialiased`}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Material+Icons&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Icons&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body className="min-h-full flex flex-col bg-background text-foreground varela-round-regular">
+      <body className={`${varelaRound.className} min-h-full flex flex-col bg-background text-foreground`}>
         {children}
       </body>
     </html>

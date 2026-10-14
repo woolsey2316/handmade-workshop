@@ -23,7 +23,8 @@ export function SiteHeader() {
             <OptionalMenuList
               optionList={Currency}
               defaultValue="usd" 
-              showImage={false} />
+              showImage={false}
+              showKey={true} />
             <span className="hidden lg:inline">Welcome to Handmade Shop</span>
           </div>
           <div className="flex items-center gap-4">

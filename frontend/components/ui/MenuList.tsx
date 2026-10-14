@@ -19,9 +19,10 @@ interface Props {
   optionList: Record<string, string>
   defaultValue: keyof OptionList
   showImage?: boolean
+  showKey?: boolean
 }
 
-export const OptionalMenuList = ({ optionList, defaultValue, showImage } : Props) => {
+export const OptionalMenuList = ({ optionList, defaultValue, showImage, showKey = false } : Props) => {
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState<keyof OptionList>(defaultValue)
   const anchorRef = React.useRef<HTMLButtonElement>(null);
@@ -74,9 +75,9 @@ export const OptionalMenuList = ({ optionList, defaultValue, showImage } : Props
           onClick={handleToggle}
           sx={{ textTransform: 'none' }}
         >
-          <div className="inline-flex items-center gap-1.5 hover:text-ink text-xs">
+          <div className="inline-flex items-center gap-1.5 hover:text-ink text-sm">
             {showImage ? <Image src={`/${selectedValue}.png`} alt="flag" width={16} height={11} /> : null}
-            {optionList[selectedValue]}
+            {showKey ? selectedValue.toString().toUpperCase() : optionList[selectedValue]}
             <KeyboardArrowDownIcon className="text-muted" fontSize="small" />
           </div>
         </Button>

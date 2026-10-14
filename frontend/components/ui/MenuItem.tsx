@@ -16,7 +16,7 @@ export const OptionalMenuItem = ({ menuName, currOption, thisOption, imageProps,
         (event) => { handleClick(event) }
       }>
       <div className="inline-flex items-center gap-1.5 hover:text-ink text-xs">
-        {imageProps}
+        {imageProps ? imageProps : null}
         {menuName}
       </div>
     </MenuItem>

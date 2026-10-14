@@ -7,7 +7,7 @@ import Popper from '@mui/material/Popper';
 import MenuList from '@mui/material/MenuList';
 import Stack from '@mui/material/Stack';
 import Image from 'next/image'
-import { Language, AppLanguage } from '@/types/languages'
+import { Language } from '@/types/languages'
 import { OptionalMenuItem } from '@/components/ui/MenuItem'
 
 export default function MenuListComposition() {

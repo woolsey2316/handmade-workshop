@@ -11,6 +11,12 @@
   --ink: #2c2c2c;
 }
 
+.varela-round-regular {
+  font-family: "Varela Round", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

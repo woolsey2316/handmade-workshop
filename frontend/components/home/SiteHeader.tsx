@@ -28,16 +28,19 @@ export function SiteHeader() {
             <span className="hidden lg:inline">Welcome to Handmade Shop</span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-accent">
+            <a href="#" className="hover:text-gold">
               My Account
             </a>
-            <a href="#" className="hover:text-accent">
+            <span className="text-muted mb-1">|</span>
+            <a href="#" className="hover:text-gold">
               Wishlist
             </a>
-            <a href="#" className="hover:text-accent">
+            <span className="text-muted mb-1">|</span>
+            <a href="#" className="hover:text-gold">
               Blog
             </a>
-            <a href="#" className="hover:text-accent">
+            <span className="text-muted mb-1">|</span>
+            <a href="#" className="hover:text-gold">
               Login
             </a>
           </div>

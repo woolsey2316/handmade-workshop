@@ -14,7 +14,7 @@ export function SiteHeader() {
   return (
     <header className="relative z-40 border-b border-line bg-white">
       <div className="hidden border-b border-line bg-[#f9f9f9] text-[12px] text-muted md:block">
-        <div className="mx-auto flex max-w-[1200px] items-center justify-between px-5 py-2.5">
+        <div className="mx-auto flex max-w-300 items-center justify-between px-5 py-2.5">
           <div className="flex items-center gap-5">
             <OptionalMenuList
               optionList={Language}
@@ -28,19 +28,19 @@ export function SiteHeader() {
             <span className="hidden lg:inline">Welcome to Handmade Shop</span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-gold transition duration-300">
+            <a href="my-account" className="hover:text-gold transition duration-300">
               My Account
             </a>
             <span className="text-muted mb-1">|</span>
-            <a href="#" className="hover:text-gold transition duration-300">
+            <a href="wishlist" className="hover:text-gold transition duration-300">
               Wishlist
             </a>
             <span className="text-muted mb-1">|</span>
-            <a href="#" className="hover:text-gold transition duration-300">
+            <a href="blog" className="hover:text-gold transition duration-300">
               Blog
             </a>
             <span className="text-muted mb-1">|</span>
-            <a href="#" className="hover:text-gold transition duration-300">
+            <a href="login" className="hover:text-gold transition duration-300">
               Login
             </a>
           </div>
@@ -91,13 +91,14 @@ export function SiteHeader() {
           <div className="flex items-center gap-3 md:gap-5">
             <a
               href="#"
-              className="inline-flex items-center gap-2 text-sm text-ink transition-colors hover:text-accent"
+              className="inline-flex items-center gap-2 text-sm text-ink transition-colors hover:text-accent relative"
             >
               <CartIcon />
-              <span className="hidden sm:inline">
-                <span className="font-medium">0</span>
-                <span className="mx-1 text-muted">·</span>
-                <span>$0.00</span>
+              <span className="hidden sm:inline bg-black rounded-full px-2 py-px absolute left-4 -top-2.5">
+                <span className="font-medium text-white text-xs">0</span>
+              </span>
+              <span className="hidden sm:inline rounded-full px-2 py-px">
+                <span className="font-medium text-black text-sm">$0.00</span>
               </span>
             </a>
           </div>
@@ -142,17 +143,6 @@ function SearchIcon() {
 
 function CartIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M6 7h12l-1 12H7L6 7z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path
-        d="M9 7V5a3 3 0 016 0v2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-    </svg>
+    <svg fill="#dec18c" width="25" height="25" viewBox="-1.5 0 19 19" xmlns="http://www.w3.org/2000/svg"><path d="M14.252 4.59a.924.924 0 0 1 .921.92v3.602a1.048 1.048 0 0 1-.916 1.017l-8.511.883a.573.573 0 0 1-.145.019.577.577 0 1 0 0 1.154h8.488a.563.563 0 1 1 0 1.126h-.91a1.03 1.03 0 1 1-1.104 0H6.849a1.03 1.03 0 1 1-1.104 0H5.6a1.703 1.703 0 1 1 0-3.406.585.585 0 0 1 .128.014L3.111 3.911H1.39a.563.563 0 1 1 0-1.125h2.09a.562.562 0 0 1 .515.337l.64 1.466h9.617z"/></svg>
   );
 }

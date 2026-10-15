@@ -259,10 +259,10 @@ export const blogPosts = [
 ];
 
 export const navLinks = [
-  { label: "Home", href: "#" },
-  { label: "Pages", href: "#" },
-  { label: "Blog", href: "#" },
-  { label: "Projects", href: "#" },
-  { label: "Features", href: "#" },
-  { label: "Shop", href: "#" },
+  { label: "Home", href: "home" },
+  { label: "Pages", href: "pages" },
+  { label: "Blog", href: "blog" },
+  { label: "Projects", href: "projects" },
+  { label: "Features", href: "features" },
+  { label: "Shop", href: "shop" },
 ];

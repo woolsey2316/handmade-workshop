@@ -9,10 +9,9 @@ import { Currency } from '@/types/currency'
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
-    <header className="relative z-40 border-b border-line bg-white">
+    <header className="relative z-40 bg-white">
       <div className="hidden border-b border-line bg-[#f9f9f9] text-[12px] text-muted md:block">
         <div className="mx-auto flex max-w-300 items-center justify-between px-5 py-2.5">
           <div className="flex items-center gap-5">
@@ -71,9 +70,9 @@ export function SiteHeader() {
             className="h-16 w-auto md:h-18"
           />
         </a>
-        <div className="flex items-center gap-6">
-          <div className="bg-white px-5 py-4">
-            <form className="mx-auto flex w-120 gap-0">
+        <div className="flex sm:items-center gap-6 sm:w-3/4">
+          <div className="hidden sm:block bg-white px-5 py-4 w-full">
+            <form className="mx-auto flex max-w-300 w-full gap-0">
               <input
                 type="search"
                 placeholder="Enter your keyword"
@@ -88,16 +87,16 @@ export function SiteHeader() {
             </form>
           </div>
 
-          <div className="flex items-center gap-3 md:gap-5">
+          <div className="flex items-center gap-3 md:gap-5 float-right">
             <a
               href="#"
               className="inline-flex items-center gap-2 text-sm text-ink transition-colors hover:text-accent relative"
             >
               <CartIcon />
-              <span className="hidden sm:inline bg-black rounded-full px-2 py-px absolute left-4 -top-2.5">
+              <span className="inline bg-black rounded-full px-2 py-px absolute left-4 -top-2.5">
                 <span className="font-medium text-white text-xs">0</span>
               </span>
-              <span className="hidden sm:inline rounded-full px-2 py-px">
+              <span className="inline rounded-full px-2 py-px">
                 <span className="font-medium text-black text-sm">$0.00</span>
               </span>
             </a>

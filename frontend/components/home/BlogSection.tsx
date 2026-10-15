@@ -4,12 +4,12 @@ import { blogPosts } from "@/lib/products";
 export function BlogSection() {
   return (
     <section className="bg-[#fafafa] py-14 md:py-20">
-      <div className="mx-auto max-w-[1200px] px-5">
+      <div className="mx-auto max-w-300 px-5">
         <div className="mb-10 text-center">
-          <p className="font-[family-name:var(--font-script)] text-3xl text-accent">
+          <p className="font-script text-3xl text-accent">
             Stories
           </p>
-          <h2 className="mt-1 font-[family-name:var(--font-display)] text-4xl font-semibold text-ink md:text-5xl">
+          <h2 className="mt-1 font-display text-4xl font-semibold text-ink md:text-5xl">
             From our blog
           </h2>
           <div className="mx-auto mt-4 h-px w-14 bg-accent" />
@@ -18,7 +18,7 @@ export function BlogSection() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {blogPosts.map((post) => (
             <article key={post.id} className="group bg-white">
-              <a href="#" className="relative block aspect-[4/3] overflow-hidden">
+              <a href="#" className="relative block aspect-4/3 overflow-hidden">
                 <Image
                   src={post.image}
                   alt={post.title}
@@ -33,7 +33,7 @@ export function BlogSection() {
                   <span className="mx-1.5">|</span>
                   {post.author}
                 </p>
-                <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl font-medium text-ink transition-colors group-hover:text-accent">
+                <h3 className="mt-2 font-display text-2xl font-medium text-ink transition-colors group-hover:text-accent">
                   <a href="#">{post.title}</a>
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">

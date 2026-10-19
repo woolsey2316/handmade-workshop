@@ -112,7 +112,7 @@ export const blogPosts: BlogPost[] = [
   }),
   withDefaults({
     id: "4",
-    title: "Inteligent Transitions In Ux Design",
+    title: "Intelligent Transitions In Ux Design",
     date: "August 2, 2015",
     author: "g5plusacc",
     categories: ["Landscape", "Travel"],

@@ -1,26 +1,32 @@
 import Image from "next/image";
 import type { BlogPost } from "@/lib/blog";
+import { postHref } from "@/lib/blog";
 
 export function BlogPostList({ posts }: { posts: BlogPost[] }) {
   return (
     <div className="space-y-12">
       {posts.map((post) => (
-        <article key={post.id} className="flex gap-4">
+        <article key={post.id} className="group flex flex-col gap-4 sm:flex-row">
           {post.type === "quote" && post.quote ? (
-            <blockquote className="border border-line bg-[#fafafa] px-8 py-10 text-center md:px-12">
-              <p className="font-display text-2xl leading-relaxed text-ink italic md:text-3xl">
-                “{post.quote.text}”
-              </p>
-              <cite className="mt-6 block text-sm not-italic text-muted">
-                {post.quote.author}
-              </cite>
-            </blockquote>
+            <a href={postHref(post)} className="block flex-1">
+              <blockquote className="border border-line bg-[#fafafa] px-8 py-10 text-center md:px-12">
+                <p className="font-display text-2xl leading-relaxed text-ink italic md:text-3xl">
+                  “{post.quote.text}”
+                </p>
+                <cite className="mt-6 block text-sm not-italic text-muted">
+                  {post.quote.author}
+                </cite>
+              </blockquote>
+            </a>
           ) : (
-            <a href="#" className="relative block aspect-video overflow-hidden bg-[#f4f4f4] w-150">
+            <a
+              href={postHref(post)}
+              className="relative block aspect-video w-full shrink-0 overflow-hidden bg-[#f4f4f4] sm:w-56 md:w-72"
+            >
               <Image
                 src={post.image}
                 alt={post.title}
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                sizes="(max-width: 640px) 100vw, 288px"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -44,9 +50,9 @@ export function BlogPostList({ posts }: { posts: BlogPost[] }) {
             </a>
           )}
 
-          <div>
-            <h2 className="font-varela-round text-xl font-medium text-ink transition-colors group-hover:text-gold md:text-2xl">
-              <a href="#">{post.title}</a>
+          <div className="min-w-0 flex-1">
+            <h2 className="font-display text-xl font-medium text-ink transition-colors group-hover:text-gold md:text-2xl">
+              <a href={postHref(post)}>{post.title}</a>
             </h2>
 
             <ul className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] text-muted">
@@ -66,7 +72,7 @@ export function BlogPostList({ posts }: { posts: BlogPost[] }) {
 
             {post.type !== "quote" && (
               <a
-                href="#"
+                href={postHref(post)}
                 className="mt-5 inline-flex text-[11px] font-semibold uppercase tracking-[0.16em] text-ink transition-colors hover:text-gold"
               >
                 View more

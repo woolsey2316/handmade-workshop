@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { blogCategories, recentPosts } from "@/lib/blog";
+import { blogCategories, postHref, recentPosts } from "@/lib/blog";
 
 export function BlogSidebar() {
   return (
@@ -63,7 +63,10 @@ export function BlogSidebar() {
         <ul className="mt-5 space-y-5">
           {recentPosts.map((post) => (
             <li key={post.id} className="flex gap-3">
-              <a href="#" className="relative h-16 w-16 shrink-0 overflow-hidden bg-[#f4f4f4]">
+              <a
+                href={postHref(post)}
+                className="relative h-16 w-16 shrink-0 overflow-hidden bg-[#f4f4f4]"
+              >
                 <Image
                   src={post.image}
                   alt=""
@@ -74,7 +77,7 @@ export function BlogSidebar() {
               </a>
               <div className="min-w-0">
                 <a
-                  href="#"
+                  href={postHref(post)}
                   className="line-clamp-2 text-sm font-medium text-ink transition-colors hover:text-gold"
                 >
                   {post.title}

@@ -61,7 +61,7 @@ export function CheckoutForm() {
       <div className="mb-8 space-y-3 border border-line bg-[#fafafa] px-5 py-4 text-sm text-muted">
         <p>
           Returning customer?{" "}
-          <a href="/login" className="text-ink underline-offset-2 hover:text-gold hover:underline">
+          <a href="/my-account" className="text-ink underline-offset-2 hover:text-gold hover:underline">
             Click here to login
           </a>
         </p>

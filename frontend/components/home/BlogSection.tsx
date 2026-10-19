@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { blogPosts } from "@/lib/blog";
+import { blogPosts, postHref } from "@/lib/blog";
 
 export function BlogSection() {
   return (
@@ -16,9 +16,12 @@ export function BlogSection() {
         </div>
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {blogPosts.map((post) => (
+          {blogPosts.slice(0, 6).map((post) => (
             <article key={post.id} className="group bg-white">
-              <a href="#" className="relative block aspect-4/3 overflow-hidden">
+              <a
+                href={postHref(post)}
+                className="relative block aspect-4/3 overflow-hidden"
+              >
                 <Image
                   src={post.image}
                   alt={post.title}
@@ -34,13 +37,13 @@ export function BlogSection() {
                   {post.author}
                 </p>
                 <h3 className="mt-2 font-display text-2xl font-medium text-ink transition-colors group-hover:text-accent">
-                  <a href="#">{post.title}</a>
+                  <a href={postHref(post)}>{post.title}</a>
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">
                   {post.excerpt}
                 </p>
                 <a
-                  href="#"
+                  href={postHref(post)}
                   className="mt-5 inline-flex text-[11px] font-semibold uppercase tracking-[0.16em] text-ink transition-colors hover:text-accent"
                 >
                   Read more

@@ -47,7 +47,7 @@ export const products: Product[] = [
     price: 40,
     salePrice: 35,
     image: "/product-05-570x570.jpg",
-    rating: 3,
+    rating: 3.5,
     category: "Special Goods",
   },
   {
@@ -80,7 +80,7 @@ export const products: Product[] = [
     price: 40,
     priceMax: 45,
     image: "/product-14-570x570.jpg",
-    rating: 2,
+    rating: 2.5,
     badge: "Hot",
     category: "Birthday Gifts",
   },
@@ -109,7 +109,7 @@ export const products: Product[] = [
     price: 40,
     salePrice: 30,
     image: "/product-18-570x570.jpg",
-    rating: 3,
+    rating: 3.5,
     category: "Personal",
   },
   {
@@ -153,7 +153,7 @@ export const products: Product[] = [
     price: 40,
     salePrice: 35,
     image: "/product-05-570x570.jpg",
-    rating: 3,
+    rating: 3.5,
     category: "Birthday Gifts",
   },
   {
@@ -178,7 +178,7 @@ export const products: Product[] = [
     price: 40,
     priceMax: 45,
     image: "/product-14-570x570.jpg",
-    rating: 2,
+    rating: 2.5,
     badge: "Hot",
     category: "Personal",
   },
@@ -187,7 +187,7 @@ export const products: Product[] = [
     name: "Knit Handmade Bracelets",
     price: 40,
     image: "/product-08-570x570.jpg",
-    rating: 4,
+    rating: 4.5,
     category: "Personal",
   },
   {
@@ -201,68 +201,11 @@ export const products: Product[] = [
   },
 ];
 
-export const blogPosts = [
-  {
-    id: "1",
-    title: "Video Post",
-    date: "April 9, 2016",
-    author: "g5plusacc",
-    excerpt:
-      "In a professional context it often happens that private or corporate clients order a publication to be made and presented with the actual …",
-    image: "/banner-2.jpg",
-  },
-  {
-    id: "2",
-    title: "I Love My Life Very Much",
-    date: "August 2, 2015",
-    author: "g5plusacc",
-    excerpt:
-      "In a professional context it often happens that private or corporate clients order a publication to be made and presented with the actual …",
-    image: "/banner-3.jpg",
-  },
-  {
-    id: "3",
-    title: "Here Are Many Variations Of Passages",
-    date: "August 2, 2015",
-    author: "g5plusacc",
-    excerpt:
-      "In a professional context it often happens that private or corporate clients order a publication to be made and presented with the actual …",
-    image: "/banner-4.jpg",
-  },
-  {
-    id: "4",
-    title: "Inteligent Transitions In Ux Design",
-    date: "August 2, 2015",
-    author: "g5plusacc",
-    excerpt:
-      "In a professional context it often happens that private or corporate clients order a publication to be made and presented with the actual …",
-    image: "/banner-11.jpg",
-  },
-  {
-    id: "5",
-    title: "Standard Post Example",
-    date: "July 14, 2015",
-    author: "g5plusacc",
-    excerpt:
-      "In a professional context it often happens that private or corporate clients order a publication to be made and presented with the actual …",
-    image: "/product-01-300x300.jpg",
-  },
-  {
-    id: "6",
-    title: "Image Post Example",
-    date: "June 1, 2015",
-    author: "g5plusacc",
-    excerpt:
-      "In a professional context it often happens that private or corporate clients order a publication to be made and presented with the actual …",
-    image: "/banner2.jpg",
-  },
-];
-
 export const navLinks = [
   { label: "Home", href: "home" },
-  { label: "Pages", href: "pages" },
+  { label: "Contact", href: "contact" },
   { label: "Blog", href: "blog" },
-  { label: "Projects", href: "projects" },
-  { label: "Features", href: "features" },
   { label: "Shop", href: "shop" },
+  { label: "Cart", href: "cart" },
+  { label: "Checkout", href: "checkout" }
 ];

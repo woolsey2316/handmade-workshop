@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { blogPosts } from "@/lib/products";
+import { blogPosts } from "@/lib/blog";
 
 export function BlogSection() {
   return (

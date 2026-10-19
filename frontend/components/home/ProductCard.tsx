@@ -1,23 +1,6 @@
 import Image from "next/image";
 import type { Product } from "@/lib/products";
-
-function Stars({ rating = 0 }: { rating?: number }) {
-  const filled = Math.round(rating);
-  return (
-    <div className="flex items-center justify-center gap-0.5 text-[11px] text-[#f0b429]">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <span
-          key={i}
-          aria-hidden
-          className={i < filled ? "opacity-100" : "opacity-25"}
-        >
-          ★
-        </span>
-      ))}
-      <span className="sr-only">Rated {rating} out of 5</span>
-    </div>
-  );
-}
+import { Stars } from "../ui/Stars";
 
 export function ProductCard({ product }: { product: Product }) {
   const discount =
@@ -71,7 +54,7 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
       </div>
 
-      <h3 className="font-[family-name:var(--font-display)] text-lg font-medium text-ink transition-colors group-hover:text-accent">
+      <h3 className="font-display text-lg font-medium text-ink transition-colors group-hover:text-accent">
         <a href="#">{product.name}</a>
       </h3>
       <div className="mt-1 flex items-center justify-center gap-2 text-sm">

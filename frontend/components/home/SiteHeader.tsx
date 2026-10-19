@@ -89,7 +89,7 @@ export function SiteHeader() {
 
           <div className="flex items-center gap-3 md:gap-5 float-right">
             <a
-              href="#"
+              href="/cart"
               className="inline-flex items-center gap-2 text-sm text-ink transition-colors hover:text-accent relative"
             >
               <CartIcon />

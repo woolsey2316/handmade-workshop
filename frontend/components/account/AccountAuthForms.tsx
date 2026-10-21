@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, type FormEvent } from "react";
+import { getStoredToken, loginUser, registerUser } from "@/lib/auth";
 
 const inputClass =
   "mt-2 w-full border border-line bg-white px-4 py-2.5 text-sm outline-none transition-colors focus:border-gold";
@@ -8,17 +10,68 @@ const labelClass =
   "block text-[11px] font-semibold uppercase tracking-[0.14em] text-muted";
 
 export function AccountAuthForms() {
-  const [loginMessage, setLoginMessage] = useState<string | null>(null);
-  const [registerMessage, setRegisterMessage] = useState<string | null>(null);
+  const router = useRouter();
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [registerError, setRegisterError] = useState<string | null>(null);
+  const [loginPending, setLoginPending] = useState(false);
+  const [registerPending, setRegisterPending] = useState(false);
 
-  function handleLogin(event: FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    if (getStoredToken()) {
+      router.replace("/my-account");
+    }
+  }, [router]);
+
+  async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setLoginMessage("Signed in (demo).");
+    setLoginError(null);
+    setLoginPending(true);
+    const form = new FormData(event.currentTarget);
+    try {
+      await loginUser({
+        email: String(form.get("email") || "").trim(),
+        password: String(form.get("password") || ""),
+      });
+      router.push("/my-account");
+      router.refresh();
+    } catch (error) {
+      setLoginError(error instanceof Error ? error.message : "Login failed.");
+    } finally {
+      setLoginPending(false);
+    }
   }
 
-  function handleRegister(event: FormEvent<HTMLFormElement>) {
+  async function handleRegister(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setRegisterMessage("Account created (demo).");
+    setRegisterError(null);
+    setRegisterPending(true);
+    const form = new FormData(event.currentTarget);
+    const password = String(form.get("password") || "");
+    const confirmPassword = String(form.get("confirm-password") || "");
+
+    if (password !== confirmPassword) {
+      setRegisterError("Passwords do not match.");
+      setRegisterPending(false);
+      return;
+    }
+
+    try {
+      await registerUser({
+        email: String(form.get("email") || "").trim(),
+        password,
+        confirm_password: confirmPassword,
+        first_name: String(form.get("first_name") || "").trim(),
+        last_name: String(form.get("last_name") || "").trim(),
+      });
+      router.push("/my-account");
+      router.refresh();
+    } catch (error) {
+      setRegisterError(
+        error instanceof Error ? error.message : "Registration failed.",
+      );
+    } finally {
+      setRegisterPending(false);
+    }
   }
 
   return (
@@ -29,12 +82,12 @@ export function AccountAuthForms() {
 
         <form onSubmit={handleLogin} className="mt-7 space-y-5">
           <label className={labelClass}>
-            Username or email address *
+            Email address *
             <input
-              type="text"
-              name="username"
+              type="email"
+              name="email"
               required
-              autoComplete="username"
+              autoComplete="email"
               className={inputClass}
             />
           </label>
@@ -57,9 +110,10 @@ export function AccountAuthForms() {
             </label>
             <button
               type="submit"
-              className="bg-ink px-7 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-gold"
+              disabled={loginPending}
+              className="bg-ink px-7 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-gold disabled:opacity-60"
             >
-              Log in
+              {loginPending ? "Logging in…" : "Log in"}
             </button>
           </div>
 
@@ -70,9 +124,9 @@ export function AccountAuthForms() {
             Lost your password?
           </a>
 
-          {loginMessage && (
-            <p className="text-sm text-gold" role="status">
-              {loginMessage}
+          {loginError && (
+            <p className="text-sm text-red-600" role="alert">
+              {loginError}
             </p>
           )}
         </form>
@@ -83,6 +137,27 @@ export function AccountAuthForms() {
         <div className="mt-3 h-px w-10 bg-gold" />
 
         <form onSubmit={handleRegister} className="mt-7 space-y-5">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <label className={labelClass}>
+              First name
+              <input
+                type="text"
+                name="first_name"
+                autoComplete="given-name"
+                className={inputClass}
+              />
+            </label>
+            <label className={labelClass}>
+              Last name
+              <input
+                type="text"
+                name="last_name"
+                autoComplete="family-name"
+                className={inputClass}
+              />
+            </label>
+          </div>
+
           <label className={labelClass}>
             Email address *
             <input
@@ -100,6 +175,19 @@ export function AccountAuthForms() {
               type="password"
               name="password"
               required
+              minLength={8}
+              autoComplete="new-password"
+              className={inputClass}
+            />
+          </label>
+
+          <label className={labelClass}>
+            Confirm Password *
+            <input
+              type="password"
+              name="confirm-password"
+              required
+              minLength={8}
               autoComplete="new-password"
               className={inputClass}
             />
@@ -107,14 +195,15 @@ export function AccountAuthForms() {
 
           <button
             type="submit"
-            className="bg-ink px-7 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-gold"
+            disabled={registerPending}
+            className="bg-ink px-7 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-gold disabled:opacity-60"
           >
-            Register
+            {registerPending ? "Creating…" : "Register"}
           </button>
 
-          {registerMessage && (
-            <p className="text-sm text-gold" role="status">
-              {registerMessage}
+          {registerError && (
+            <p className="text-sm text-red-600" role="alert">
+              {registerError}
             </p>
           )}
         </form>

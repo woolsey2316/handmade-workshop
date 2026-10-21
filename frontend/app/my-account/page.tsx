@@ -1,4 +1,4 @@
-import { AccountAuthForms } from "@/components/account/AccountAuthForms";
+import { AccountDashboard } from "@/components/account/AccountDashboard";
 import { PageHero } from "@/components/blog/PageHero";
 import { Partners } from "@/components/home/Partners";
 import { SiteFooter } from "@/components/home/SiteFooter";
@@ -17,7 +17,7 @@ export default function MyAccountPage() {
           ]}
         />
         <section className="mx-auto max-w-300 px-5 py-12 md:py-16">
-          <AccountAuthForms />
+          <AccountDashboard />
         </section>
         <Partners />
       </main>

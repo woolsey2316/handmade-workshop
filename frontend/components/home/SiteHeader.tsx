@@ -1,14 +1,29 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { navLinks } from "@/lib/products";
 import { Language } from '@/types/languages'
 import { OptionalMenuList } from "@/components/ui/MenuList"
 import { Currency } from '@/types/currency'
+import { getStoredUser, type AuthUser } from "@/lib/auth";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<AuthUser | null>(null);
+
+  useEffect(() => {
+    function sync() {
+      setUser(getStoredUser());
+    }
+    sync();
+    window.addEventListener("hw-auth-changed", sync);
+    window.addEventListener("storage", sync);
+    return () => {
+      window.removeEventListener("hw-auth-changed", sync);
+      window.removeEventListener("storage", sync);
+    };
+  }, []);
 
   return (
     <header className="relative z-40 bg-white">
@@ -24,7 +39,11 @@ export function SiteHeader() {
               defaultValue="usd" 
               showImage={false}
               showKey={true} />
-            <span className="hidden lg:inline">Welcome to Handmade Shop</span>
+            <span className="hidden lg:inline">
+              {user
+                ? `Welcome, ${user.first_name || user.email}`
+                : "Welcome to Handmade Shop"}
+            </span>
           </div>
           <div className="flex items-center gap-4">
             <a href="/my-account" className="hover:text-gold transition duration-300">
@@ -39,9 +58,15 @@ export function SiteHeader() {
               Blog
             </a>
             <span className="text-muted mb-1">|</span>
-            <a href="/my-account" className="hover:text-gold transition duration-300">
-              Login
-            </a>
+            {user ? (
+              <a href="/my-account" className="hover:text-gold transition duration-300">
+                Account
+              </a>
+            ) : (
+              <a href="/login" className="hover:text-gold transition duration-300">
+                Login
+              </a>
+            )}
           </div>
         </div>
       </div>

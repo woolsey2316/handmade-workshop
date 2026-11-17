@@ -131,3 +131,22 @@ export async function logoutUser() {
 export async function fetchMe() {
   return request<AuthUser>("/auth/me/", { method: "GET" }, true);
 }
+
+export async function requestPasswordReset(email: string) {
+  return request<{ detail: string }>("/auth/password-reset/", {
+    method: "POST",
+    body: JSON.stringify({ email }),
+  });
+}
+
+export async function confirmPasswordReset(input: {
+  uid: string;
+  token: string;
+  password: string;
+  confirm_password: string;
+}) {
+  return request<{ detail: string }>("/auth/password-reset/confirm/", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
+}

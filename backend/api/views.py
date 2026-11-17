@@ -4,7 +4,15 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
+from .emails import send_password_reset_email
+from .models import CustomUser
+from .serializers import (
+    LoginSerializer,
+    PasswordResetConfirmSerializer,
+    PasswordResetRequestSerializer,
+    RegisterSerializer,
+    UserSerializer,
+)
 
 
 class RegisterView(APIView):
@@ -55,3 +63,38 @@ class MeView(APIView):
 
     def get(self, request):
         return Response(UserSerializer(request.user).data)
+
+
+class PasswordResetRequestView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        serializer = PasswordResetRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        email = serializer.validated_data["email"]
+
+        # Always return the same response to avoid email enumeration.
+        user = CustomUser.objects.filter(email__iexact=email, is_active=True).first()
+        if user is not None:
+            send_password_reset_email(user)
+
+        return Response(
+            {
+                "detail": (
+                    "If an account exists for that email, "
+                    "a password reset link has been sent."
+                )
+            }
+        )
+
+
+class PasswordResetConfirmView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        serializer = PasswordResetConfirmSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        # Invalidate existing API tokens after a password change.
+        Token.objects.filter(user=user).delete()
+        return Response({"detail": "Password has been reset. You can log in now."})

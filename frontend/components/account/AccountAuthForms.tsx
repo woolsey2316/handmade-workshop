@@ -118,7 +118,7 @@ export function AccountAuthForms() {
           </div>
 
           <a
-            href="#"
+            href="/forgot-password"
             className="inline-block text-sm text-muted transition-colors hover:text-gold"
           >
             Lost your password?

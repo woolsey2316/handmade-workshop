@@ -1,8 +1,10 @@
+import binascii
+
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError as DjangoValidationError
-from django.utils.encoding import force_str
+from django.utils.encoding import DjangoUnicodeDecodeError, force_str
 from django.utils.http import urlsafe_base64_decode
 from rest_framework import serializers
 
@@ -90,15 +92,28 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
                 {"confirm_password": "Passwords do not match."}
             )
 
+        uidb64 = attrs["uid"].strip()
+        token = attrs["token"].strip()
+
         try:
-            uid = force_str(urlsafe_base64_decode(attrs["uid"]))
+            # Decode as ASCII digits for pk; catch corrupt/mangled uid values
+            # (e.g. quoted-printable artifacts like "3DNA" instead of "NA").
+            uid = force_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        except (
+            TypeError,
+            ValueError,
+            OverflowError,
+            User.DoesNotExist,
+            UnicodeDecodeError,
+            DjangoUnicodeDecodeError,
+            binascii.Error,
+        ):
             raise serializers.ValidationError(
-                {"uid": "Invalid or expired reset link."}
+                {"uid": "Invalid or expired reset link. Request a new link from the forgot password page."}
             )
 
-        if not default_token_generator.check_token(user, attrs["token"]):
+        if not default_token_generator.check_token(user, token):
             raise serializers.ValidationError(
                 {"token": "Invalid or expired reset link."}
             )

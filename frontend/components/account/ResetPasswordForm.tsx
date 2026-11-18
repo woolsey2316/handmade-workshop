@@ -12,8 +12,9 @@ const labelClass =
 export function ResetPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const uid = searchParams.get("uid") || "";
-  const token = searchParams.get("token") || "";
+  // Strip accidental quoted-printable artifacts from copied console emails (=3D → =).
+  const uid = (searchParams.get("uid") || "").replace(/^3D/, "").trim();
+  const token = (searchParams.get("token") || "").replace(/^3D/, "").trim();
 
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);

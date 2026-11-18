@@ -5,11 +5,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .emails import send_password_reset_email
-from .models import CustomUser
+from .models import Category, CustomUser, Product
 from .serializers import (
+    CategorySerializer,
     LoginSerializer,
     PasswordResetConfirmSerializer,
     PasswordResetRequestSerializer,
+    ProductSerializer,
     RegisterSerializer,
     UserSerializer,
 )
@@ -98,3 +100,28 @@ class PasswordResetConfirmView(APIView):
         # Invalidate existing API tokens after a password change.
         Token.objects.filter(user=user).delete()
         return Response({"detail": "Password has been reset. You can log in now."})
+
+
+class ProductListView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        products = Product.objects.select_related("category").order_by("id")
+        category = request.query_params.get("category")
+        if category:
+            products = products.filter(category__name__iexact=category)
+        serializer = ProductSerializer(
+            products, many=True, context={"request": request}
+        )
+        return Response(serializer.data)
+
+
+class CategoryListView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        categories = Category.objects.order_by("name")
+        serializer = CategorySerializer(
+            categories, many=True, context={"request": request}
+        )
+        return Response(serializer.data)

@@ -1,11 +1,13 @@
 from django.urls import path
 
 from .views import (
+    CategoryListView,
     LoginView,
     LogoutView,
     MeView,
     PasswordResetConfirmView,
     PasswordResetRequestView,
+    ProductListView,
     RegisterView,
 )
 
@@ -24,4 +26,6 @@ urlpatterns = [
         PasswordResetConfirmView.as_view(),
         name="auth-password-reset-confirm",
     ),
+    path("products/", ProductListView.as_view(), name="product-list"),
+    path("categories/", CategoryListView.as_view(), name="category-list"),
 ]

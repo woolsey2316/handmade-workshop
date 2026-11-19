@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { ProductCard } from "@/components/home/ProductCard";
-import { shopProducts, sortOptions, type Product } from "@/lib/products";
+import { useProducts } from "@/hooks/api/use-products";
+import { sortOptions, type Product } from "@/lib/products";
 
 const PER_PAGE = 12;
 
@@ -32,10 +33,11 @@ function sortProducts(list: Product[], sort: string) {
 }
 
 export function ShopCatalog() {
+  const { products, isLoading, error } = useProducts();
   const [sort, setSort] = useState("default");
   const [page, setPage] = useState(1);
 
-  const sorted = useMemo(() => sortProducts(shopProducts, sort), [sort]);
+  const sorted = useMemo(() => sortProducts(products, sort), [products, sort]);
   const total = sorted.length;
   const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
   const currentPage = Math.min(page, totalPages);
@@ -48,7 +50,11 @@ export function ShopCatalog() {
     <div>
       <div className="mb-8 flex flex-col gap-4 border-b border-line pb-5 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted">
-          Showing {showingFrom}–{showingTo} of {total} results
+          {isLoading
+            ? "Loading products…"
+            : error
+              ? "Unable to load products."
+              : `Showing ${showingFrom}–${showingTo} of ${total} results`}
         </p>
         <label className="inline-flex items-center gap-2 text-sm text-muted">
           <span className="sr-only">Sort products</span>
@@ -69,11 +75,13 @@ export function ShopCatalog() {
         </label>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6">
-        {pageItems.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      {!error && !isLoading && (
+        <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6">
+          {pageItems.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      )}
 
       {totalPages > 1 && (
         <nav

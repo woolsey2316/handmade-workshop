@@ -7,10 +7,12 @@ export function BlogPostDetail({
   previous,
   next,
 }: {
-  post: BlogPost;
+  post: BlogPost | undefined;
   previous: BlogPost | null;
   next: BlogPost | null;
 }) {
+  if (!post) return null;
+  
   return (
     <article>
       {post.type === "quote" && post.quote ? (
@@ -57,29 +59,7 @@ export function BlogPostDetail({
       </header>
 
       <div className="mt-8 space-y-6 text-sm leading-relaxed text-muted md:text-base">
-        {post.content.map((block, index) => {
-          if (block.type === "heading") {
-            return (
-              <h2
-                key={index}
-                className="pt-2 font-display text-2xl font-medium tracking-wide text-ink uppercase md:text-3xl"
-              >
-                {block.text}
-              </h2>
-            );
-          }
-          if (block.type === "quote") {
-            return (
-              <blockquote
-                key={index}
-                className="border-l-2 border-gold bg-[#fafafa] px-6 py-5 font-display text-xl text-ink italic md:px-8 md:text-2xl"
-              >
-                {block.text}
-              </blockquote>
-            );
-          }
-          return <p key={index}>{block.text}</p>;
-        })}
+        <p>{post.content}</p>;
       </div>
 
       <div className="mt-10 flex flex-col gap-6 border-y border-line py-6 sm:flex-row sm:items-center sm:justify-between">

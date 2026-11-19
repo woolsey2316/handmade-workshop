@@ -1,7 +1,10 @@
-import { products } from "@/lib/products";
+"use client";
+
+import { useProducts } from "@/hooks/api/use-products";
 import { ProductCard } from "./ProductCard";
 
 export function FeaturedCollection() {
+  const { products, isLoading, error } = useProducts();
   const featured = products.slice(0, 8);
 
   return (
@@ -21,13 +24,22 @@ export function FeaturedCollection() {
           </p>
         </div>
 
-        <div className="flex gap-5 overflow-x-auto pb-4 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden">
-          {featured.map((product) => (
-            <div key={product.id} className="min-w-55 max-w-55 shrink-0 md:min-w-60 md:max-w-60">
-              <ProductCard product={product} />
-            </div>
-          ))}
-        </div>
+        {error ? (
+          <p className="text-sm text-accent">Unable to load products. Please try again.</p>
+        ) : isLoading ? (
+          <p className="text-sm text-muted">Loading products…</p>
+        ) : (
+          <div className="flex gap-5 overflow-x-auto pb-4 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden">
+            {featured.map((product) => (
+              <div
+                key={product.id}
+                className="min-w-55 max-w-55 shrink-0 md:min-w-60 md:max-w-60"
+              >
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

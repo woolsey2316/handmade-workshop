@@ -2,7 +2,7 @@ export const Stars = ({ rating = 0 }: { rating?: number }) => {
   const filled = Math.floor(rating);
   const hasHalfRating = rating % 1 !== 0;
   return (
-    <div className="flex items-center justify-center gap-0.5 text-[18px] text-[#f0b429]">
+    <div className="flex items-center justify-start gap-0.5 text-[18px] text-[#f0b429]">
       {Array.from({ length: filled + (hasHalfRating ? 1 : 0) }).map((_, i) => (
         i < filled ?
         <svg

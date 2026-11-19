@@ -8,6 +8,7 @@ from .views import (
     PasswordResetConfirmView,
     PasswordResetRequestView,
     ProductListView,
+    PostListView,
     RegisterView,
 )
 
@@ -27,5 +28,6 @@ urlpatterns = [
         name="auth-password-reset-confirm",
     ),
     path("products/", ProductListView.as_view(), name="product-list"),
+    path("posts/", PostListView.as_view(), name="post-list"),
     path("categories/", CategoryListView.as_view(), name="category-list"),
 ]

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -102,3 +103,22 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"OrderItem {self.id}"
+
+class Post(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField(blank=True)
+    image = models.ImageField(upload_to="posts/", blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    slug = models.SlugField(unique=True)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category, blank=True)
+    tags = ArrayField(
+        models.CharField(max_length=100),
+        default=list,
+        blank=True,
+    )
+    comments = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title

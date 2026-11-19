@@ -1,7 +1,9 @@
 import Image from "next/image";
-import { blogCategories, postHref, recentPosts } from "@/lib/blog";
+import { blogCategories, postHref } from "@/lib/blog";
+import type { BlogPost } from "@/lib/blog";
 
-export function BlogSidebar() {
+export function BlogSidebar({ posts }: { posts: BlogPost[] }) {
+  const recentPosts = posts.slice(1, 4);
   return (
     <aside className="space-y-10">
       <section>

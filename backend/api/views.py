@@ -5,13 +5,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .emails import send_password_reset_email
-from .models import Category, CustomUser, Product
+from .models import Category, CustomUser, Product, Post
 from .serializers import (
     CategorySerializer,
     LoginSerializer,
     PasswordResetConfirmSerializer,
     PasswordResetRequestSerializer,
     ProductSerializer,
+    PostSerializer,
     RegisterSerializer,
     UserSerializer,
 )
@@ -123,5 +124,15 @@ class CategoryListView(APIView):
         categories = Category.objects.order_by("name")
         serializer = CategorySerializer(
             categories, many=True, context={"request": request}
+        )
+        return Response(serializer.data)
+
+class PostListView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        posts = Post.objects.order_by("id")
+        serializer = PostSerializer(
+            posts, many=True, context={"request": request}
         )
         return Response(serializer.data)

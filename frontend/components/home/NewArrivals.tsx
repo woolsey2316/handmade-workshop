@@ -1,27 +1,28 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { products } from "@/lib/products";
+import { useProducts } from "@/hooks/api/use-products";
 import { ProductCard } from "./ProductCard";
 
 const tabs = ["Birthday Gifts", "Personal", "Special Goods"] as const;
 
 export function NewArrivals() {
   const [active, setActive] = useState<(typeof tabs)[number]>("Birthday Gifts");
+  const { products, isLoading, error } = useProducts();
 
   const filtered = useMemo(
     () => products.filter((p) => p.category === active).slice(0, 8),
-    [active],
+    [active, products],
   );
 
   return (
     <section className="bg-[#fafafa] py-14 md:py-20">
-      <div className="mx-auto max-w-[1200px] px-5">
+      <div className="mx-auto max-w-300 px-5">
         <div className="mb-10 text-center">
-          <p className="font-[family-name:var(--font-script)] text-3xl text-accent">
+          <p className="font-script text-3xl text-accent">
             Discover
           </p>
-          <h2 className="mt-1 font-[family-name:var(--font-display)] text-4xl font-semibold text-ink md:text-5xl">
+          <h2 className="mt-1 font-display text-4xl font-semibold text-ink md:text-5xl">
             New Arrivals
           </h2>
           <div className="mx-auto mt-4 h-px w-14 bg-accent" />
@@ -44,11 +45,19 @@ export function NewArrivals() {
           ))}
         </div>
 
-        <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-4 md:gap-x-6">
-          {filtered.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {error ? (
+          <p className="text-center text-sm text-accent">
+            Unable to load products. Please try again.
+          </p>
+        ) : isLoading ? (
+          <p className="text-center text-sm text-muted">Loading products…</p>
+        ) : (
+          <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-4 md:gap-x-6">
+            {filtered.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

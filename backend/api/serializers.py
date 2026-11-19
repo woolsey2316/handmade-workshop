@@ -8,7 +8,7 @@ from django.utils.encoding import DjangoUnicodeDecodeError, force_str
 from django.utils.http import urlsafe_base64_decode
 from rest_framework import serializers
 
-from .models import Category, CustomUser, Product
+from .models import Category, CustomUser, Product, Post
 
 User = get_user_model()
 
@@ -38,6 +38,32 @@ class ProductSerializer(serializers.ModelSerializer):
         )
         read_only_fields = fields
 
+class PostSerializer(serializers.ModelSerializer):
+    author = serializers.SerializerMethodField()
+    categories = serializers.SlugRelatedField(
+        many=True, read_only=True, slug_field="name"
+    )
+
+    class Meta:
+        model = Post
+        fields = (
+            "id",
+            "title",
+            "content",
+            "image",
+            "created_at",
+            "updated_at",
+            "slug",
+            "author",
+            "categories",
+            "tags",
+            "comments",
+        )
+        read_only_fields = fields
+
+    def get_author(self, obj):
+        name = f"{obj.author.first_name} {obj.author.last_name}".strip()
+        return name or obj.author.email.split("@")[0]
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
